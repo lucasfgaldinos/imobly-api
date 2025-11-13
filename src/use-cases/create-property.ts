@@ -13,6 +13,7 @@ type CreatePropertyUseCaseResponse = {
   property: Property;
 };
 
+export const allProperties: Property[] = [];
 export class CreatePropertyUseCase {
   execute({
     name,
@@ -22,7 +23,7 @@ export class CreatePropertyUseCase {
     state,
     size,
   }: CreatePropertyUseCaseRequest): CreatePropertyUseCaseResponse {
-    const newProperty = {
+    const property = {
       name,
       totalValue,
       numberOfRooms,
@@ -31,6 +32,8 @@ export class CreatePropertyUseCase {
       size,
     };
 
-    return { property: newProperty };
+    allProperties.push(property);
+
+    return { property };
   }
 }

@@ -6,3 +6,6 @@ export const app = fastify();
 
 app.register(baseRoutes);
 app.register(propertiesRoutes);
+
+// TODO Criar um handler global de erros
+// TODO Criar conexão com o Banco de Dados

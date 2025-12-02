@@ -7,6 +7,8 @@ type PropertyProps = {
   size: string;
 };
 
+// TODO Definir todas as propriedades da entidade Property
+
 export class Property {
   public name: string;
   public totalValue: number;

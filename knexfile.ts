@@ -3,11 +3,7 @@ import type { Knex } from 'knex';
 
 const config: Knex.Config = {
   client: 'postgresql',
-  connection: {
-    database: 'imobly',
-    user: 'imobly',
-    password: 'imobly',
-  },
+  connection: 'postgres://imobly:imobly@localhost:5432/imobly',
   pool: {
     min: 2,
     max: 10,

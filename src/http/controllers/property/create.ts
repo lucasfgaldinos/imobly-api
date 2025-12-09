@@ -1,13 +1,15 @@
 import type { FastifyReply, FastifyRequest } from 'fastify';
 import { StatusCodes } from 'http-status-codes';
+import { PropertiesRepository } from '@/database/repositories/properties.js';
 import {
   CreatePropertyUseCase,
   type CreatePropertyUseCaseRequest,
 } from '@/use-cases/create-property.js';
 
-export function create(request: FastifyRequest, reply: FastifyReply) {
+export async function create(request: FastifyRequest, reply: FastifyReply) {
   // TODO Validar os dados que vêm do body para criar a Property
-  const response = new CreatePropertyUseCase().execute(
+  const repository = new PropertiesRepository();
+  const response = await new CreatePropertyUseCase(repository).execute(
     request.body as CreatePropertyUseCaseRequest,
   );
 

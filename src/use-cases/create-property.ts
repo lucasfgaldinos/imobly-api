@@ -1,4 +1,5 @@
-import type { Property } from '@/entities/property.js';
+import type { PropertiesRepository } from '@/database/repositories/properties.js';
+import { Property } from '@/entities/property.js';
 
 export type CreatePropertyUseCaseRequest = {
   name: string;
@@ -6,35 +7,35 @@ export type CreatePropertyUseCaseRequest = {
   numberOfRooms: number;
   city: string;
   state: string;
-  size: string;
+  size: number;
 };
 
 type CreatePropertyUseCaseResponse = {
   property: Property;
 };
 
-export const allProperties: Property[] = [];
 export class CreatePropertyUseCase {
-  execute({
+  constructor(private repository: PropertiesRepository) {}
+
+  async execute({
     name,
     totalValue,
     numberOfRooms,
     city,
     state,
     size,
-  }: CreatePropertyUseCaseRequest): CreatePropertyUseCaseResponse {
-    const property = {
+  }: CreatePropertyUseCaseRequest): Promise<CreatePropertyUseCaseResponse> {
+    const property = new Property({
       name,
       totalValue,
       numberOfRooms,
       city,
       state,
       size,
-    };
+    });
 
-    // TODO Salvar a property no Banco de Dados
-    allProperties.push(property);
+    const createdProperty = await this.repository.create(property);
 
-    return { property };
+    return { property: createdProperty };
   }
 }

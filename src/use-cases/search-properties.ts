@@ -1,5 +1,4 @@
 import type { Property } from '@/entities/property.js';
-import { allProperties } from './create-property.js';
 
 type SearchPropertiesUseCaseResponse = {
   properties: Property[];
@@ -7,7 +6,7 @@ type SearchPropertiesUseCaseResponse = {
 
 export class SearchPropertiesUseCase {
   execute(): SearchPropertiesUseCaseResponse {
-    const properties = [...allProperties];
+    const properties = [] as Property[];
 
     return { properties };
   }

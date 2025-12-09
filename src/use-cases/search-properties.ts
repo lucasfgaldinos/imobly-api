@@ -1,3 +1,4 @@
+import type { PropertiesRepository } from '@/database/repositories/properties.js';
 import type { Property } from '@/entities/property.js';
 
 type SearchPropertiesUseCaseResponse = {
@@ -5,8 +6,10 @@ type SearchPropertiesUseCaseResponse = {
 };
 
 export class SearchPropertiesUseCase {
-  execute(): SearchPropertiesUseCaseResponse {
-    const properties = [] as Property[];
+  constructor(private repository: PropertiesRepository) {}
+
+  async execute(): Promise<SearchPropertiesUseCaseResponse> {
+    const properties = await this.repository.listAll();
 
     return { properties };
   }

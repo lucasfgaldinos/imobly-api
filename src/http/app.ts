@@ -16,9 +16,7 @@ app.setErrorHandler((error, _, reply) => {
       .send({ message: 'Validation error!', issues: z.treeifyError(error) });
   }
 
-  app.log.error(error);
-
   return reply
     .status(StatusCodes.INTERNAL_SERVER_ERROR)
-    .send({ message: 'Internal server error!' });
+    .send({ message: 'Internal server error!', error });
 });

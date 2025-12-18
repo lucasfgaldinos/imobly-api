@@ -4,10 +4,22 @@ import { Property } from '@/entities/property.js';
 export type CreatePropertyUseCaseRequest = {
   name: string;
   totalValue: number;
-  numberOfRooms: number;
-  city: string;
-  state: string;
   size: number;
+  rentValue: number;
+  condoValue: number;
+  taxValue: number;
+  numberOfBathrooms: number;
+  numberOfRooms: number;
+  garageSlots: number;
+  arePetsAllowed: boolean;
+  isNextToSubway: boolean;
+  isActive: boolean;
+  description: string;
+  isRent: boolean;
+  isSale: boolean;
+  address: string;
+  latitude: number;
+  longitude: number;
 };
 
 type CreatePropertyUseCaseResponse = {
@@ -17,22 +29,10 @@ type CreatePropertyUseCaseResponse = {
 export class CreatePropertyUseCase {
   constructor(private repository: PropertiesRepository) {}
 
-  async execute({
-    name,
-    totalValue,
-    numberOfRooms,
-    city,
-    state,
-    size,
-  }: CreatePropertyUseCaseRequest): Promise<CreatePropertyUseCaseResponse> {
-    const property = new Property({
-      name,
-      totalValue,
-      numberOfRooms,
-      city,
-      state,
-      size,
-    });
+  async execute(
+    data: CreatePropertyUseCaseRequest,
+  ): Promise<CreatePropertyUseCaseResponse> {
+    const property = new Property(data);
 
     const createdProperty = await this.repository.create(property);
 

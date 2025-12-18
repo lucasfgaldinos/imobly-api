@@ -3,19 +3,33 @@ import { knex } from '../index.js';
 import { PropertySchema } from '../schemas/property.js';
 
 export class PropertiesRepository {
-  async create(property: Property): Promise<Property> {
-    const [createdProperty] = await knex('properties')
+  async create(data: Property): Promise<Property> {
+    const [createdProperty] = await knex<PropertySchema>('properties')
       .insert({
-        name: property.name,
-        total_value: property.totalValue,
-        number_of_rooms: property.numberOfRooms,
-        city: property.city,
-        state: property.state,
-        size: property.size,
+        name: data.name,
+        total_value: data.totalValue,
+        size: data.size,
+        rent_value: data.rentValue,
+        condo_value: data.condoValue,
+        tax_value: data.taxValue,
+        number_of_bathrooms: data.numberOfBathrooms,
+        number_of_rooms: data.numberOfRooms,
+        garage_slots: data.garageSlots,
+        are_pets_allowed: data.arePetsAllowed,
+        is_next_to_subway: data.isNextToSubway,
+        is_active: data.isActive,
+        description: data.description,
+        is_rent: data.isRent,
+        is_sale: data.isSale,
+        address: data.address,
+        latitude: data.latitude,
+        longitude: data.longitude,
       })
       .returning('*');
 
-    const propertyEntity = new PropertySchema(createdProperty).toEntity();
+    const propertyEntity = new PropertySchema(
+      createdProperty as PropertySchema,
+    ).toEntity();
 
     return propertyEntity;
   }

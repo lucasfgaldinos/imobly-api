@@ -8,10 +8,22 @@ export async function create(request: FastifyRequest, reply: FastifyReply) {
   const schema = z.object({
     name: z.string().min(1).max(255),
     totalValue: z.number().int(),
-    numberOfRooms: z.number().int(),
-    city: z.string().min(1).max(255),
-    state: z.string().length(2),
     size: z.number(),
+    rentValue: z.number().int(),
+    condoValue: z.number().int(),
+    taxValue: z.number().int(),
+    numberOfBathrooms: z.number().int(),
+    numberOfRooms: z.number().int(),
+    garageSlots: z.number().int(),
+    arePetsAllowed: z.boolean(),
+    isNextToSubway: z.boolean(),
+    isActive: z.boolean(),
+    description: z.string().max(1000),
+    isRent: z.boolean(),
+    isSale: z.boolean(),
+    address: z.string().max(1000),
+    latitude: z.number(),
+    longitude: z.number(),
   });
 
   const data = schema.parse(request.body);

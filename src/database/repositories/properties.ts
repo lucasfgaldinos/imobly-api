@@ -24,6 +24,7 @@ export class PropertiesRepository {
         address: data.address,
         latitude: data.latitude,
         longitude: data.longitude,
+        is_furnished: data.isFurnished
       })
       .returning('*');
 

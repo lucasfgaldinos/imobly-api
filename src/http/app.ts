@@ -1,6 +1,7 @@
 import fastify from 'fastify';
 import { StatusCodes } from 'http-status-codes';
 import z, { ZodError } from 'zod';
+import { AppError } from '@/errors/app-error.js';
 import { baseRoutes } from './controllers/base/routes.js';
 import { propertiesRoutes } from './controllers/property/routes.js';
 
@@ -14,6 +15,10 @@ app.setErrorHandler((error, _, reply) => {
     return reply
       .status(StatusCodes.BAD_REQUEST)
       .send({ message: 'Validation error!', issues: z.treeifyError(error) });
+  }
+
+  if (error instanceof AppError) {
+    return reply.status(error.statusCode).send({ message: error.message });
   }
 
   console.log(error);

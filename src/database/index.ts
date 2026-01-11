@@ -1,8 +1,9 @@
 import knexConfig from 'knex';
+import { envs } from '@/config/envs.js';
 
 export const knex = knexConfig({
   client: 'pg',
-  connection: 'postgres://imobly:imobly@localhost:5432/imobly',
+  connection: envs.POSTGRES_CONN_STRING,
   pool: {
     min: 2,
     max: 10,

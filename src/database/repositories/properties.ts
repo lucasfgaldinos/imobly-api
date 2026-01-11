@@ -24,7 +24,7 @@ export class PropertiesRepository {
         address: data.address,
         latitude: data.latitude,
         longitude: data.longitude,
-        is_furnished: data.isFurnished
+        is_furnished: data.isFurnished,
       })
       .returning('*');
 
@@ -46,18 +46,56 @@ export class PropertiesRepository {
   }
 
   async findById(id: string): Promise<Property | null> {
-    const properties = await knex<PropertySchema>('properties').where({id})
+    const properties = await knex<PropertySchema>('properties').where({ id });
 
     const propertiesEntity = properties.map((property) =>
       new PropertySchema(property).toEntity(),
     );
 
-    const property = propertiesEntity[0]
+    const property = propertiesEntity[0];
 
-    if(!property) {
-      return null
+    if (!property) {
+      return null;
     }
 
-    return property
+    return property;
+  }
+
+  async update(
+    id: string,
+    data: Partial<Omit<Property, 'id' | 'createdAt' | 'updatedAt'>>,
+  ): Promise<Property> {
+    const [updatedProperty] = await knex<PropertySchema>('properties')
+      .update({
+        ...(data.name && { name: data.name }),
+        ...(data.totalValue && { total_value: data.totalValue }),
+        ...(data.size && { size: data.size }),
+        ...(data.rentValue && { rent_value: data.rentValue }),
+        ...(data.condoValue && { condo_value: data.condoValue }),
+        ...(data.taxValue && { tax_value: data.taxValue }),
+        ...(data.numberOfBathrooms && {
+          number_of_bathrooms: data.numberOfBathrooms,
+        }),
+        ...(data.numberOfRooms && { number_of_rooms: data.numberOfRooms }),
+        ...(data.garageSlots && { garage_slots: data.garageSlots }),
+        ...(data.arePetsAllowed && { are_pets_allowed: data.arePetsAllowed }),
+        ...(data.isNextToSubway && { is_next_to_subway: data.isNextToSubway }),
+        ...(data.isActive && { is_active: data.isActive }),
+        ...(data.description && { description: data.description }),
+        ...(data.isRent && { is_rent: data.isRent }),
+        ...(data.isSale && { is_sale: data.isSale }),
+        ...(data.address && { address: data.address }),
+        ...(data.latitude && { latitude: data.latitude }),
+        ...(data.longitude && { longitude: data.longitude }),
+        ...(data.isFurnished && { is_furnished: data.isFurnished }),
+      })
+      .where({ id })
+      .returning('*');
+
+    const propertyEntity = new PropertySchema(
+      updatedProperty as PropertySchema,
+    ).toEntity();
+
+    return propertyEntity;
   }
 }

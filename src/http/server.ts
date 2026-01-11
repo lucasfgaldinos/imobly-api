@@ -1,10 +1,9 @@
+import { envs } from '@/config/envs.js';
 import { app } from './app.js';
-
-const PORT = 4000;
 
 app
   .listen({
     host: '0.0.0.0',
-    port: PORT,
+    port: envs.APP_PORT,
   })
-  .then(() => console.log(`Server is running on port ${PORT} 🚀`));
+  .then(() => console.log(`Server is running on port ${envs.APP_PORT}! 🚀`));

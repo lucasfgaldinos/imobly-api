@@ -1,6 +1,8 @@
 import path from 'node:path';
 import type { Knex } from 'knex';
 
+// import { envs } from './src/config/envs.js'; -> Deu erro ao tentar encontrar o módulo, por isso a string de conexão aqui é usada diretamente
+
 const config: Knex.Config = {
   client: 'postgresql',
   connection: 'postgres://imobly:imobly@localhost:5432/imobly',

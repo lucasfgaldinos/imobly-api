@@ -1,12 +1,13 @@
 import type { VisitsRepository } from '@/database/repositories/visits.js';
 import { Visit } from '@/entities/visit.js';
+import type { VisitStatus } from '@/enums/visit-status.js';
 
 export type CreateVisitUseCaseRequest = {
   name: string;
   phone: string;
   email: string;
   date: Date;
-  status: string;
+  status: VisitStatus;
   propertyId: string;
 };
 
@@ -14,7 +15,7 @@ type CreateVisitUseCaseResponse = {
   visit: Visit;
 };
 
-export class CreatePropertyUseCase {
+export class CreateVisitUseCase {
   constructor(private repository: VisitsRepository) {}
 
   async execute(

@@ -4,13 +4,11 @@ import z, { ZodError } from 'zod';
 import { AppError } from '@/errors/app-error.js';
 import { baseRoutes } from './controllers/base/routes.js';
 import { propertiesRoutes } from './controllers/properties/routes.js';
-import { visitssRoutes } from './controllers/visits/route.js';
 
 export const app = fastify();
 
 app.register(baseRoutes);
 app.register(propertiesRoutes);
-app.register(visitssRoutes);
 
 app.setErrorHandler((error, _, reply) => {
   if (error instanceof ZodError) {
